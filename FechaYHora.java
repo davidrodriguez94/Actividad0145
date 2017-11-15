@@ -10,8 +10,8 @@ public class FechaYHora
     private DisplayDosCaracteres nDia;
     private DisplayDosCaracteres nMes;
     private DisplayDosCaracteres nAno;
-    private DisplayDosCaracteres hora;
-    private DisplayDosCaracteres minutos;
+    private NumberDisplay hora;
+    private NumberDisplay minutos;
     /**
      * Constructor de la clase CalendarioBasico
      */ 
@@ -20,8 +20,8 @@ public class FechaYHora
         nDia = new DisplayDosCaracteres(31);
         nMes = new DisplayDosCaracteres(13);
         nAno = new DisplayDosCaracteres(100);
-        hora = new DisplayDosCaracteres(24);
-        minutos = new DisplayDosCaracteres(60);
+        hora = new NumberDisplay(24);
+        minutos = new NumberDisplay(60);
     }
 
     /**
@@ -32,17 +32,18 @@ public class FechaYHora
         nDia.setValorAlmacenado(nuevoDia);
         nMes.setValorAlmacenado(nuevoMes);
         nAno.setValorAlmacenado(nuevoAno);
-        hora.setValorAlmacenado(horaDisplay);
+        hora.setValue(horaDisplay);
+        minutos.setValue(minutoDisplay);
     }
 
     /**
      *Metodo para obtener la fecha
      */
-    public String obtenerFecha()
+    public String getFechaYHora()
     {
-        String devolverFecha;
-        devolverFecha = nDia.getTextoDelDisplay() + "-" + nMes.getTextoDelDisplay() + "-" + nAno.getTextoDelDisplay();
-        return devolverFecha;
+        String devolverFechaYHora;
+        devolverFechaYHora = nDia.getTextoDelDisplay() + "-" + nMes.getTextoDelDisplay() + "-" + nAno.getTextoDelDisplay()+ " " + hora.getDisplayValue()+ ":" + minutos.getDisplayValue();
+        return devolverFechaYHora;
     }
 
     public void avanzarFecha()
@@ -55,9 +56,22 @@ public class FechaYHora
             }
         }
     }
-
-    public void getFechaYHora()
+    
+     public void avanzarFechaYHora()
     {
-        
-    }
+        {   minutos.increment();
+            if(minutos.getValue()==0){
+                hora.increment();
+                if(hora.getValue()==0){
+                    nDia.incrementaValorAlmacenado();
+                    if (nDia.getValorAlmacenado() == 1){
+                        nMes.incrementaValorAlmacenado();
+                        if (nMes.getValorAlmacenado() == 1){
+                            nAno.incrementaValorAlmacenado();
+                        }
+                    }
+
+                }
+            }
+        }}
 }
